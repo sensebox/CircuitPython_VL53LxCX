@@ -1,0 +1,6 @@
+version = 1
+
+[[annotations]]
+path = "**/*.bin"
+SPDX-FileCopyrightText = "2025 senseBox <kontakt@sensebox.de>"
+SPDX-License-Identifier = "CC-BY-4.0"
