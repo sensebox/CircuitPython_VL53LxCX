@@ -1,0 +1,3 @@
+Adafruit CircuitPython 9.2.4 on 2025-01-29; senseBox MCU-S2 ESP32S2 with ESP32S2
+Board ID:sensebox_mcu_esp32s2
+UID:487F301D80C8
