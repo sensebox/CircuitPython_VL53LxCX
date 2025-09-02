@@ -88,10 +88,26 @@ Or the following command to update an existing version:
 
     circup update
 
+Important: Binary File Requirement
+===================================
+
+When using this library with CircuitPython, you must also copy the corresponding ``.bin`` file to the ``/lib`` folder on your CircuitPython device, alongside the ``.mpy`` file. This binary file contains the firmware required for the VL53L5CX/VL53L8CX sensors to function properly.
+
+The binary file should be placed in the same ``/lib`` directory as the ``vl53lxcx.mpy`` file on your CircuitPython filesystem.
+
 Usage Example
 =============
 
 .. code-block:: python
+
+    # SPDX-FileCopyrightText: 2017 Scott Shawcroft, written for Adafruit Industries
+    # SPDX-FileCopyrightText: Copyright (c) 2025 senseBox for senseBox
+    #
+    # SPDX-License-Identifier: Unlicense
+
+    import board
+    import busio
+    from digitalio import DigitalInOut, Direction
 
     from vl53lxcx import (
         DATA_DISTANCE_MM,
@@ -101,13 +117,15 @@ Usage Example
         VL53L8CX,
     )
 
+    lpn_pin = board.D3
     i2c = busio.I2C(board.SCL, board.SDA, frequency=1_000_000)
 
-    lpn = DigitalInOut(board.D3)
+    lpn = DigitalInOut(lpn_pin)
     lpn.direction = Direction.OUTPUT
     lpn.value = True
 
     tof = VL53L8CX(i2c, lpn=lpn)
+
 
     def main():
         tof.reset()
@@ -130,7 +148,19 @@ Usage Example
                 distance = results.distance_mm
                 status = results.target_status
 
-                # enumerate(distance) ...
+                for i, d in enumerate(distance):
+                    if status[i] == STATUS_VALID:
+                        print(f"{d:4}", end=" ")
+                    else:
+                        print("xxxx", end=" ")
+
+                    if (i & grid) == grid:
+                        print("")
+
+                print("")
+
+    main()
+
 
 
 Documentation

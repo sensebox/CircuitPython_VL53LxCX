@@ -160,7 +160,7 @@ class ConfigDataFile:
     _XTALK4X4_OFFSET = _FW_SIZE + _DEFAULT_CONFIG_SIZE + _XTALK_SIZE
     _XTALK4X4_SIZE = 776
 
-    def __init__(self, name="vl53l5cx/vl_fw_config.bin"):
+    def __init__(self, name="vl_fw_config.bin"):
         self._file_name = _find_file(name, 88540)
 
     def _read_offset_data(self, offset, size):
@@ -220,7 +220,7 @@ class VL53LxCX:
         self._distance_fmt = ""
         self._distance = None
         self.config_data = ConfigDataFile(
-            name="vl53l5cx/" + ("vl53l5cx_fw.bin" if self._id == VL53L5CX_ID else "vl53l8cx_fw.bin")
+            name=("vl53l5cx_fw.bin" if self._id == VL53L5CX_ID else "vl53l8cx_fw.bin")
         )
 
     @staticmethod
