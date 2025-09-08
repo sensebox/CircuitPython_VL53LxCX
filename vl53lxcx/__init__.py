@@ -161,6 +161,14 @@ class ConfigDataFile:
     _XTALK4X4_SIZE = 776
 
     def __init__(self, name="vl_fw_config.bin"):
+        # look in same directory as this file
+        # https://github.com/adafruit/Adafruit_CircuitPython_OV5640/blob/f1d15dd10c8ad6d28eec6502f1bdb8886b4fdef1/adafruit_ov5640/__init__.py#L1160
+        if "/" in __file__:
+            file_base = __file__.rsplit("/", 1)[0].rsplit(".", 1)[0] + "/"
+        else:
+            file_base = ""
+        name = file_base + name
+
         self._file_name = _find_file(name, 88540)
 
     def _read_offset_data(self, offset, size):
